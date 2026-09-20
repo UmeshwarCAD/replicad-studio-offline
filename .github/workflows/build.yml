@@ -1,27 +1,32 @@
-name: Update Replicad Studio Workbench
+name: Build Replicad Studio for Android
 
 on:
   workflow_dispatch:
 
   schedule:
-    # Every Sunday at 02:00 UTC
+    # Check upstream every Sunday at 02:00 UTC
     - cron: "0 2 * * 0"
-
-  push:
-    branches:
-      - main
 
 permissions:
   contents: write
 
 jobs:
-  build-replicad-studio:
+  build:
+    name: Build latest Replicad Studio
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout my repository
+      # ------------------------------------------------------------
+      # 1. Checkout YOUR repository
+      # ------------------------------------------------------------
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # ------------------------------------------------------------
+      # 2. Checkout CURRENT Replicad main branch
+      # ------------------------------------------------------------
       - name: Checkout latest Replicad
         uses: actions/checkout@v4
         with:
@@ -30,144 +35,201 @@ jobs:
           path: replicad-source
           fetch-depth: 1
 
+      # ------------------------------------------------------------
+      # 3. Node.js version used by upstream Replicad
+      # ------------------------------------------------------------
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 24.19.0
           cache: npm
-          cache-dependency-path: replicad-source/pnpm-lock.yaml
+          cache-dependency-path: replicad-source/package-lock.json
 
-      - name: Enable Corepack
+      # ------------------------------------------------------------
+      # 4. Show exactly which Replicad commit is being built
+      # ------------------------------------------------------------
+      - name: Get Replicad version
+        id: version
+        working-directory: replicad-source
+        shell: bash
         run: |
-          corepack enable
-          corepack prepare pnpm@9.13.2 --activate
+          COMMIT=$(git rev-parse HEAD)
+          SHORT_COMMIT=$(git rev-parse --short HEAD)
+          DATE=$(git show -s --format=%cI HEAD)
 
+          echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
+          echo "short_commit=$SHORT_COMMIT" >> "$GITHUB_OUTPUT"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+
+          echo "Replicad commit: $COMMIT"
+          echo "Replicad short commit: $SHORT_COMMIT"
+          echo "Commit date: $DATE"
+
+      # ------------------------------------------------------------
+      # 5. Install upstream dependencies
+      # ------------------------------------------------------------
       - name: Install dependencies
         working-directory: replicad-source
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
-      - name: Find Studio package
-        working-directory: replicad-source
-        run: |
-          echo "Replicad source:"
-          find packages -maxdepth 2 -type f -name package.json | sort
-
+      # ------------------------------------------------------------
+      # 6. Build all Replicad workspace packages
+      #
+      # Upstream's own workflow does this before building Studio.
+      # ------------------------------------------------------------
       - name: Build Replicad packages
         working-directory: replicad-source
-        run: |
-          pnpm --filter replicad build
+        run: npm run prepare-packages
 
+      # ------------------------------------------------------------
+      # 7. Build the ACTUAL Studio workspace
+      #
+      # This is the command used by the current upstream workflow.
+      # ------------------------------------------------------------
       - name: Build Studio
         working-directory: replicad-source
-        shell: bash
-        run: |
-          set -e
+        run: npm run build --workspace=studio
 
-          if [ -d "packages/studio" ]; then
-            cd packages/studio
-          elif [ -d "studio" ]; then
-            cd studio
-          else
-            echo "Studio directory was not found."
-            echo "Available packages:"
-            find packages -maxdepth 2 -type d | sort
-            exit 1
-          fi
-
-          echo "Building Studio from:"
-          pwd
-
-          pnpm install --frozen-lockfile || pnpm install
-          pnpm build
-
-      - name: Locate Studio build
+      # ------------------------------------------------------------
+      # 8. Verify the expected output directory
+      # ------------------------------------------------------------
+      - name: Verify Studio build
         working-directory: replicad-source
         shell: bash
         run: |
-          echo "Searching for build output..."
-
-          find . \
-            -type d \
-            \( -name dist -o -name build \) \
-            -not -path "*/node_modules/*" \
-            -print
-
-      - name: Copy Studio to local-storage directory
-        shell: bash
-        run: |
           set -e
 
-          rm -rf replicad-studio
+          test -d packages/studio/dist
+          test -f packages/studio/dist/index.html
 
-          STUDIO_DIST=""
+          echo ""
+          echo "Studio build verified:"
+          echo "packages/studio/dist"
+          echo ""
 
-          for DIR in \
-            "replicad-source/packages/studio/dist" \
-            "replicad-source/packages/studio/build" \
-            "replicad-source/studio/dist" \
-            "replicad-source/studio/build"
-          do
-            if [ -d "$DIR" ]; then
-              STUDIO_DIST="$DIR"
-              break
-            fi
-          done
+          du -sh packages/studio/dist
+          echo ""
 
-          if [ -z "$STUDIO_DIST" ]; then
-            echo "Could not locate Studio build output."
-            find replicad-source \
-              -type d \
-              \( -name dist -o -name build \) \
-              -not -path "*/node_modules/*"
-            exit 1
-          fi
+          find packages/studio/dist -maxdepth 2 -type f | sort | head -100
 
-          echo "Using Studio build: $STUDIO_DIST"
-
-          mkdir -p replicad-studio
-          cp -a "$STUDIO_DIST"/. replicad-studio/
-
-      - name: Save upstream commit information
+      # ------------------------------------------------------------
+      # 9. Copy the finished static website
+      # ------------------------------------------------------------
+      - name: Prepare Android folder
+        shell: bash
         run: |
-          cd replicad-source
+          rm -rf replicad-studio-android
 
-          echo "Replicad commit:"
-          git rev-parse HEAD
+          mkdir -p replicad-studio-android
 
-          git rev-parse HEAD > ../replicad-studio/REPLICAD_COMMIT.txt
+          cp -a \
+            replicad-source/packages/studio/dist/. \
+            replicad-studio-android/
 
-          {
-            echo "Replicad repository: https://github.com/sgenoud/replicad"
-            echo "Commit: $(git rev-parse HEAD)"
-            echo "Date: $(git show -s --format=%cI HEAD)"
-          } > ../replicad-studio/VERSION.txt
-
-      - name: Create ZIP for Android
+      # ------------------------------------------------------------
+      # 10. Add version information
+      # ------------------------------------------------------------
+      - name: Add build information
+        shell: bash
         run: |
-          rm -f replicad-studio.zip
+          cat > replicad-studio-android/REPLICAD-VERSION.txt <<EOF
+          Replicad Studio
 
-          cd replicad-studio
-          zip -r ../replicad-studio.zip .
+          Repository:
+          https://github.com/sgenoud/replicad
 
-      - name: Upload Studio ZIP as workflow artifact
+          Branch:
+          main
+
+          Commit:
+          ${{ steps.version.outputs.commit }}
+
+          Short commit:
+          ${{ steps.version.outputs.short_commit }}
+
+          Commit date:
+          ${{ steps.version.outputs.date }}
+
+          Built by GitHub Actions:
+          $GITHUB_RUN_ID
+          EOF
+
+      # ------------------------------------------------------------
+      # 11. ZIP for Android
+      # ------------------------------------------------------------
+      - name: Create Android ZIP
+        shell: bash
+        run: |
+          rm -f replicad-studio-android.zip
+
+          cd replicad-studio-android
+
+          zip -r ../replicad-studio-android.zip .
+
+      # ------------------------------------------------------------
+      # 12. Upload downloadable GitHub Actions artifact
+      # ------------------------------------------------------------
+      - name: Upload Android ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: replicad-studio-workbench
-          path: replicad-studio.zip
+          name: replicad-studio-android
+          path: replicad-studio-android.zip
           retention-days: 90
 
-      - name: Commit latest Studio files
+      # ------------------------------------------------------------
+      # 13. Save the static files directly in YOUR repository
+      # ------------------------------------------------------------
+      - name: Update repository files
+        shell: bash
         run: |
+          rm -rf replicad-studio
+          cp -a replicad-studio-android replicad-studio
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add replicad-studio replicad-studio.zip
+          git add replicad-studio
 
           if git diff --cached --quiet; then
             echo "No Studio changes."
           else
-            git commit -m "Update Replicad Studio Workbench"
+            git commit \
+              -m "Update Replicad Studio ${{ steps.version.outputs.short_commit }}"
+
             git push
           fi
+
+      # ------------------------------------------------------------
+      # 14. Create/update GitHub Release
+      #
+      # This gives you a convenient download on Android.
+      # ------------------------------------------------------------
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: replicad-studio-latest
+          name: Replicad Studio Latest
+          prerelease: false
+          make_latest: true
+          files: replicad-studio-android.zip
+          body: |
+            Latest Replicad Studio build.
+
+            Upstream:
+            https://github.com/sgenoud/replicad
+
+            Branch:
+            main
+
+            Commit:
+            ${{ steps.version.outputs.commit }}
+
+            Commit date:
+            ${{ steps.version.outputs.date }}
+
+            The ZIP contains the static Studio files
+            generated from packages/studio/dist.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
