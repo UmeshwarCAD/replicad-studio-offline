@@ -1,6 +1,6 @@
 name: Build Replicad Studio
 
-on: 
+on:
   workflow_dispatch:
   push:
 
@@ -9,14 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Clone Replicad Latest
         run: git clone https://github.com/sgenoud/replicad.git temp
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -26,8 +21,8 @@ jobs:
       - name: Install and Build
         working-directory: temp
         run: |
-          pnpm install
-          pnpm run build --filter=studio
+          npm install
+          npm run build --workspace=studio
           ls -lh packages/studio/dist/
 
       - name: Upload Studio Files
