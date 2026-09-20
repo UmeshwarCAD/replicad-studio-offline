@@ -1,0 +1,42 @@
+name: Build Replicad Studio
+
+on: 
+  workflow_dispatch: # run manually
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Clone Replicad Latest
+        run: |
+          git clone https://github.com/sgenoud/replicad.git temp
+          cp -r temp/packages/studio ./studio
+          cp temp/package.json ./ 
+          cp temp/pnpm-lock.yaml ./
+          cp temp/pnpm-workspace.yaml ./
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install and Build
+        run: |
+          pnpm install
+          pnpm run build --filter=studio
+          ls -lh studio/dist/
+
+      - name: Upload Studio Files
+        uses: actions/upload-artifact@v4
+        with:
+          name: replicad-studio-dist
+          path: studio/dist/
