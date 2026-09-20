@@ -1,358 +1,111 @@
-name: Build SolveSpace Web for Android
+name: Download Latest brepjs
 
 on:
   workflow_dispatch:
 
-  schedule:
-    # Check latest SolveSpace master every Sunday
-    - cron: "30 2 * * 0"
-
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  build:
-    name: Build SolveSpace WebAssembly
+  download-brepjs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # ==========================================================
-      # 1. Checkout YOUR repository
-      # ==========================================================
-      - name: Checkout my repository
-        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: 22
+          cache: npm
 
-      # ==========================================================
-      # 2. Checkout latest official SolveSpace
-      # ==========================================================
-      - name: Checkout SolveSpace
-        uses: actions/checkout@v6
-        with:
-          repository: solvespace/solvespace
-          ref: master
-          path: solvespace
-          fetch-depth: 1
-
-      # ==========================================================
-      # 3. Initialize ONLY the submodules required for the build
-      #
-      # This follows the current upstream CI.
-      # ==========================================================
-      - name: Initialize SolveSpace submodules
-        working-directory: solvespace
-        run: |
-          git submodule update --init extlib/mimalloc extlib/eigen
-
-      # ==========================================================
-      # 4. Record upstream commit
-      # ==========================================================
-      - name: Get SolveSpace version
+      - name: Get latest brepjs version
         id: version
-        working-directory: solvespace
         shell: bash
         run: |
-          COMMIT="$(git rev-parse HEAD)"
-          SHORT="$(git rev-parse --short HEAD)"
-          DATE="$(git show -s --format=%cI HEAD)"
+          set -euo pipefail
 
-          echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
-          echo "short=$SHORT" >> "$GITHUB_OUTPUT"
-          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          BREPJS_VERSION="$(npm view brepjs version)"
+          OCCT_VERSION="$(npm view occt-wasm version)"
 
-          echo "SolveSpace commit: $COMMIT"
-          echo "Short commit:      $SHORT"
-          echo "Commit date:       $DATE"
+          echo "brepjs=$BREPJS_VERSION" >> "$GITHUB_OUTPUT"
+          echo "occt=$OCCT_VERSION" >> "$GITHUB_OUTPUT"
 
-      # ==========================================================
-      # 5. Install native build dependencies
-      # ==========================================================
-      - name: Install build dependencies
+          echo "Latest brepjs: $BREPJS_VERSION"
+          echo "Latest occt-wasm: $OCCT_VERSION"
+
+      - name: Create download directory
         run: |
-          sudo apt-get update
+          rm -rf brepjs-package
+          mkdir -p brepjs-package
 
-          sudo apt-get install -y \
-            git \
-            build-essential \
-            cmake \
-            python3 \
-            ninja-build
-
-      # ==========================================================
-      # 6. Install Emscripten
-      # ==========================================================
-      - name: Install Emscripten
+      - name: Download latest brepjs
         shell: bash
         run: |
-          git clone \
-            https://github.com/emscripten-core/emsdk.git \
-            "$HOME/emsdk"
+          set -euo pipefail
 
-          cd "$HOME/emsdk"
+          npm pack brepjs@latest --pack-destination brepjs-package
+          tar -xzf brepjs-package/brepjs-*.tgz \
+            -C brepjs-package
 
-          ./emsdk install latest
-          ./emsdk activate latest
-
-          source ./emsdk_env.sh
-
-          echo "Emscripten:"
-          emcc --version
-
-      # ==========================================================
-      # 7. Build SolveSpace WebAssembly
-      #
-      # These options come directly from SolveSpace's
-      # current Web build instructions.
-      # ==========================================================
-      - name: Configure SolveSpace Web
-        working-directory: solvespace
+      - name: Download latest occt-wasm
         shell: bash
         run: |
-          source "$HOME/emsdk/emsdk_env.sh"
+          set -euo pipefail
 
-          rm -rf build
+          npm pack occt-wasm@latest --pack-destination brepjs-package
+          tar -xzf brepjs-package/occt-wasm-*.tgz \
+            -C brepjs-package
 
-          mkdir build
-          cd build
-
-          emcmake cmake .. \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DENABLE_LTO=ON \
-            -DENABLE_TESTS=OFF \
-            -DENABLE_CLI=OFF \
-            -DENABLE_COVERAGE=OFF
-
-      # ==========================================================
-      # 8. Compile
-      # ==========================================================
-      - name: Compile SolveSpace Web
-        working-directory: solvespace
+      - name: Create package.json
         shell: bash
         run: |
-          source "$HOME/emsdk/emsdk_env.sh"
-
-          cmake --build build \
-            --parallel "$(nproc)"
-
-      # ==========================================================
-      # 9. Inspect generated files
-      # ==========================================================
-      - name: Inspect Web build
-        working-directory: solvespace
-        shell: bash
-        run: |
-          set -eux
-
-          echo "Build output:"
-          find build/bin -maxdepth 1 -type f -printf '%f\n' | sort
-
-          echo ""
-          echo "HTML:"
-          find build/bin \
-            -maxdepth 1 \
-            -type f \
-            -name "solvespace*.html" \
-            -print
-
-          echo ""
-          echo "JavaScript:"
-          find build/bin \
-            -maxdepth 1 \
-            -type f \
-            -name "solvespace*.js" \
-            -print
-
-          echo ""
-          echo "WebAssembly:"
-          find build/bin \
-            -maxdepth 1 \
-            -type f \
-            -name "solvespace*.wasm" \
-            -print
-
-      # ==========================================================
-      # 10. Verify the complete Web application exists
-      # ==========================================================
-      - name: Verify SolveSpace Web output
-        working-directory: solvespace
-        shell: bash
-        run: |
-          set -e
-
-          HTML_COUNT=$(
-            find build/bin \
-              -maxdepth 1 \
-              -type f \
-              -name "solvespace*.html" \
-              | wc -l
-          )
-
-          JS_COUNT=$(
-            find build/bin \
-              -maxdepth 1 \
-              -type f \
-              -name "solvespace*.js" \
-              | wc -l
-          )
-
-          WASM_COUNT=$(
-            find build/bin \
-              -maxdepth 1 \
-              -type f \
-              -name "solvespace*.wasm" \
-              | wc -l
-          )
-
-          echo "HTML files : $HTML_COUNT"
-          echo "JS files   : $JS_COUNT"
-          echo "WASM files : $WASM_COUNT"
-
-          if [ "$HTML_COUNT" -lt 1 ]; then
-            echo "ERROR: SolveSpace HTML was not generated."
-            exit 1
-          fi
-
-          if [ "$JS_COUNT" -lt 1 ]; then
-            echo "ERROR: SolveSpace JavaScript was not generated."
-            exit 1
-          fi
-
-          if [ "$WASM_COUNT" -lt 1 ]; then
-            echo "ERROR: SolveSpace WebAssembly was not generated."
-            exit 1
-          fi
-
-          echo ""
-          echo "SolveSpace Web build looks valid."
-
-      # ==========================================================
-      # 11. Prepare Android directory
-      # ==========================================================
-      - name: Prepare Android package
-        shell: bash
-        run: |
-          set -e
-
-          rm -rf solvespace-web-android
-          mkdir -p solvespace-web-android
-
-          cp -a \
-            solvespace/build/bin/. \
-            solvespace-web-android/
-
-      # ==========================================================
-      # 12. Add version information
-      # ==========================================================
-      - name: Add version information
-        shell: bash
-        run: |
-          cat > solvespace-web-android/SOLVESPACE-VERSION.txt <<EOF
-          SolveSpace Web
-
-          Official repository:
-          https://github.com/solvespace/solvespace
-
-          Branch:
-          master
-
-          Commit:
-          ${{ steps.version.outputs.commit }}
-
-          Short commit:
-          ${{ steps.version.outputs.short }}
-
-          Commit date:
-          ${{ steps.version.outputs.date }}
-
-          Build:
-          Emscripten WebAssembly
-
-          Note:
-          SolveSpace Web is experimental upstream.
+          cat > brepjs-package/package.json <<EOF
+          {
+            "name": "brepjs-android-bundle",
+            "private": true,
+            "description": "Latest brepjs and occt-wasm bundle",
+            "brepjs": "${{ steps.version.outputs.brepjs }}",
+            "occt-wasm": "${{ steps.version.outputs.occt }}"
+          }
           EOF
 
-      # ==========================================================
-      # 13. Create ZIP
-      # ==========================================================
-      - name: Create Android ZIP
+      - name: Create version information
         shell: bash
         run: |
-          rm -f solvespace-web-android.zip
+          cat > brepjs-package/VERSIONS.txt <<EOF
+          brepjs: ${{ steps.version.outputs.brepjs }}
+          occt-wasm: ${{ steps.version.outputs.occt }}
 
-          cd solvespace-web-android
+          Downloaded: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          Source:
+          https://www.npmjs.com/package/brepjs
+          https://www.npmjs.com/package/occt-wasm
+          EOF
 
-          zip -9 -r \
-            ../solvespace-web-android.zip \
-            .
+      - name: Remove npm archives
+        run: |
+          find brepjs-package -name "*.tgz" -delete
 
-      # ==========================================================
-      # 14. Upload GitHub Actions artifact
-      # ==========================================================
-      - name: Upload Android artifact
-        uses: actions/upload-artifact@v6
+      - name: Create ZIP
+        shell: bash
+        run: |
+          zip -r \
+            "brepjs-${{ steps.version.outputs.brepjs }}-android.zip" \
+            brepjs-package
+
+      - name: Upload brepjs ZIP
+        uses: actions/upload-artifact@v4
         with:
-          name: solvespace-web-android
-          path: solvespace-web-android.zip
-          if-no-files-found: error
+          name: brepjs-${{ steps.version.outputs.brepjs }}-android
+          path: brepjs-${{ steps.version.outputs.brepjs }}-android.zip
           retention-days: 90
 
-      # ==========================================================
-      # 15. Store the extracted files in YOUR repository
-      # ==========================================================
-      - name: Update repository copy
-        shell: bash
+      - name: Show package information
         run: |
-          rm -rf solvespace-web
-          cp -a solvespace-web-android solvespace-web
-
-          git config user.name "github-actions[bot]"
-          git config user.email \
-            "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add solvespace-web
-
-          if git diff --cached --quiet; then
-            echo "No SolveSpace changes."
-          else
-            git commit \
-              -m "Update SolveSpace Web ${{ steps.version.outputs.short }}"
-
-            git push
-          fi
-
-      # ==========================================================
-      # 16. Create downloadable release
-      # ==========================================================
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: solvespace-web-latest
-          name: SolveSpace Web Latest
-          make_latest: true
-          prerelease: false
-          files: solvespace-web-android.zip
-          body: |
-            SolveSpace WebAssembly build.
-
-            Upstream:
-            https://github.com/solvespace/solvespace
-
-            Branch:
-            master
-
-            Commit:
-            ${{ steps.version.outputs.commit }}
-
-            Commit date:
-            ${{ steps.version.outputs.date }}
-
-            Built for local HTTP serving on Android.
-
-            WARNING:
-            SolveSpace Web is an experimental upstream port.
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
+          echo "======================================"
+          echo "brepjs:    ${{ steps.version.outputs.brepjs }}"
+          echo "occt-wasm: ${{ steps.version.outputs.occt }}"
+          echo "======================================"
+          ls -lh "brepjs-${{ steps.version.outputs.brepjs }}-android.zip"
