@@ -11,9 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Clone Replicad Latest
-        run: |
-          git clone https://github.com/sgenoud/replicad.git temp
-          ls temp/
+        run: git clone https://github.com/sgenoud/replicad.git temp
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -23,9 +21,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
-          cache-dependency-path: temp/pnpm-lock.yaml
+          node-version: 24
 
       - name: Install and Build
         working-directory: temp
