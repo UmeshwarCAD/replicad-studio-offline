@@ -1,0 +1,19 @@
+Replicad Studio
+
+Repository:
+https://github.com/sgenoud/replicad
+
+Branch:
+main
+
+Commit:
+e4b05f67dc4e2393a876ce8c5064a9c93db05bf1
+
+Short commit:
+e4b05f6
+
+Commit date:
+2026-09-04T16:09:18+02:00
+
+Built by GitHub Actions:
+35499372504
