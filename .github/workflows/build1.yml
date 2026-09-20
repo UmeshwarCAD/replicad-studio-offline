@@ -4,62 +4,72 @@ on:
   workflow_dispatch:
 
   schedule:
-    # Check upstream every Sunday
+    # Check latest SolveSpace master every Sunday
     - cron: "30 2 * * 0"
 
 permissions:
   contents: write
 
 jobs:
-  build-solvespace-web:
+  build:
     name: Build SolveSpace WebAssembly
     runs-on: ubuntu-latest
 
     steps:
 
-      # ---------------------------------------------------------
+      # ==========================================================
       # 1. Checkout YOUR repository
-      # ---------------------------------------------------------
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # ==========================================================
+      - name: Checkout my repository
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      # ---------------------------------------------------------
+      # ==========================================================
       # 2. Checkout latest official SolveSpace
-      # ---------------------------------------------------------
+      # ==========================================================
       - name: Checkout SolveSpace
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: solvespace/solvespace
           ref: master
           path: solvespace
           fetch-depth: 1
-          submodules: recursive
 
-      # ---------------------------------------------------------
-      # 3. Record upstream commit
-      # ---------------------------------------------------------
-      - name: Record SolveSpace version
+      # ==========================================================
+      # 3. Initialize ONLY the submodules required for the build
+      #
+      # This follows the current upstream CI.
+      # ==========================================================
+      - name: Initialize SolveSpace submodules
+        working-directory: solvespace
+        run: |
+          git submodule update --init extlib/mimalloc extlib/eigen
+
+      # ==========================================================
+      # 4. Record upstream commit
+      # ==========================================================
+      - name: Get SolveSpace version
         id: version
         working-directory: solvespace
         shell: bash
         run: |
-          COMMIT=$(git rev-parse HEAD)
-          SHORT=$(git rev-parse --short HEAD)
-          DATE=$(git show -s --format=%cI HEAD)
+          COMMIT="$(git rev-parse HEAD)"
+          SHORT="$(git rev-parse --short HEAD)"
+          DATE="$(git show -s --format=%cI HEAD)"
 
           echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
           echo "short=$SHORT" >> "$GITHUB_OUTPUT"
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
 
-          echo "SolveSpace commit:"
-          echo "$COMMIT"
+          echo "SolveSpace commit: $COMMIT"
+          echo "Short commit:      $SHORT"
+          echo "Commit date:       $DATE"
 
-      # ---------------------------------------------------------
-      # 4. Install build dependencies
-      # ---------------------------------------------------------
-      - name: Install dependencies
+      # ==========================================================
+      # 5. Install native build dependencies
+      # ==========================================================
+      - name: Install build dependencies
         run: |
           sudo apt-get update
 
@@ -70,16 +80,13 @@ jobs:
             python3 \
             ninja-build
 
-      # ---------------------------------------------------------
-      # 5. Install Emscripten
-      #
-      # Official SolveSpace documentation requires Emscripten
-      # for the Web build.
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 6. Install Emscripten
+      # ==========================================================
       - name: Install Emscripten
         shell: bash
         run: |
-          git clone --depth 1 \
+          git clone \
             https://github.com/emscripten-core/emsdk.git \
             "$HOME/emsdk"
 
@@ -90,17 +97,19 @@ jobs:
 
           source ./emsdk_env.sh
 
+          echo "Emscripten:"
           emcc --version
 
-      # ---------------------------------------------------------
-      # 6. Build SolveSpace WebAssembly
-      # ---------------------------------------------------------
-      - name: Build SolveSpace Web
+      # ==========================================================
+      # 7. Build SolveSpace WebAssembly
+      #
+      # These options come directly from SolveSpace's
+      # current Web build instructions.
+      # ==========================================================
+      - name: Configure SolveSpace Web
         working-directory: solvespace
         shell: bash
         run: |
-          set -e
-
           source "$HOME/emsdk/emsdk_env.sh"
 
           rm -rf build
@@ -115,52 +124,112 @@ jobs:
             -DENABLE_CLI=OFF \
             -DENABLE_COVERAGE=OFF
 
-          make -j"$(nproc)"
+      # ==========================================================
+      # 8. Compile
+      # ==========================================================
+      - name: Compile SolveSpace Web
+        working-directory: solvespace
+        shell: bash
+        run: |
+          source "$HOME/emsdk/emsdk_env.sh"
 
-      # ---------------------------------------------------------
-      # 7. Verify WebAssembly build
-      # ---------------------------------------------------------
-      - name: Verify web build
+          cmake --build build \
+            --parallel "$(nproc)"
+
+      # ==========================================================
+      # 9. Inspect generated files
+      # ==========================================================
+      - name: Inspect Web build
+        working-directory: solvespace
+        shell: bash
+        run: |
+          set -eux
+
+          echo "Build output:"
+          find build/bin -maxdepth 1 -type f -printf '%f\n' | sort
+
+          echo ""
+          echo "HTML:"
+          find build/bin \
+            -maxdepth 1 \
+            -type f \
+            -name "solvespace*.html" \
+            -print
+
+          echo ""
+          echo "JavaScript:"
+          find build/bin \
+            -maxdepth 1 \
+            -type f \
+            -name "solvespace*.js" \
+            -print
+
+          echo ""
+          echo "WebAssembly:"
+          find build/bin \
+            -maxdepth 1 \
+            -type f \
+            -name "solvespace*.wasm" \
+            -print
+
+      # ==========================================================
+      # 10. Verify the complete Web application exists
+      # ==========================================================
+      - name: Verify SolveSpace Web output
         working-directory: solvespace
         shell: bash
         run: |
           set -e
 
-          echo "Build directory:"
-          find build/bin -maxdepth 1 -type f -print | sort
+          HTML_COUNT=$(
+            find build/bin \
+              -maxdepth 1 \
+              -type f \
+              -name "solvespace*.html" \
+              | wc -l
+          )
 
-          echo ""
-          echo "Web files:"
+          JS_COUNT=$(
+            find build/bin \
+              -maxdepth 1 \
+              -type f \
+              -name "solvespace*.js" \
+              | wc -l
+          )
 
-          find build/bin \
-            -maxdepth 1 \
-            -type f \
-            \( \
-              -name "*.html" \
-              -o -name "*.js" \
-              -o -name "*.wasm" \
-              -o -name "*.data" \
-            \) \
-            -print
+          WASM_COUNT=$(
+            find build/bin \
+              -maxdepth 1 \
+              -type f \
+              -name "solvespace*.wasm" \
+              | wc -l
+          )
 
-          WEB_HTML=$(find build/bin \
-            -maxdepth 1 \
-            -type f \
-            -name "solvespace*.html" \
-            | head -1)
+          echo "HTML files : $HTML_COUNT"
+          echo "JS files   : $JS_COUNT"
+          echo "WASM files : $WASM_COUNT"
 
-          if [ -z "$WEB_HTML" ]; then
-            echo "ERROR: SolveSpace Web HTML output was not found."
+          if [ "$HTML_COUNT" -lt 1 ]; then
+            echo "ERROR: SolveSpace HTML was not generated."
+            exit 1
+          fi
+
+          if [ "$JS_COUNT" -lt 1 ]; then
+            echo "ERROR: SolveSpace JavaScript was not generated."
+            exit 1
+          fi
+
+          if [ "$WASM_COUNT" -lt 1 ]; then
+            echo "ERROR: SolveSpace WebAssembly was not generated."
             exit 1
           fi
 
           echo ""
-          echo "Found:"
-          echo "$WEB_HTML"
+          echo "SolveSpace Web build looks valid."
 
-      # ---------------------------------------------------------
-      # 8. Prepare Android static web directory
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 11. Prepare Android directory
+      # ==========================================================
       - name: Prepare Android package
         shell: bash
         run: |
@@ -173,56 +242,9 @@ jobs:
             solvespace/build/bin/. \
             solvespace-web-android/
 
-      # ---------------------------------------------------------
-      # 9. Create a simple index.html
-      #
-      # SolveSpace may generate a solvespace*.html filename.
-      # This makes the Android HTTP server open index.html.
-      # ---------------------------------------------------------
-      - name: Create Android index
-        shell: bash
-        run: |
-          set -e
-
-          HTML=$(find solvespace-web-android \
-            -maxdepth 1 \
-            -type f \
-            -name "solvespace*.html" \
-            | head -1)
-
-          if [ -z "$HTML" ]; then
-            echo "No SolveSpace HTML file found."
-            exit 1
-          fi
-
-          BASENAME=$(basename "$HTML")
-
-          cat > solvespace-web-android/index.html <<EOF
-          <!doctype html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport"
-                  content="width=device-width,
-                           initial-scale=1,
-                           maximum-scale=1,
-                           user-scalable=no">
-            <title>SolveSpace Web</title>
-          </head>
-          <body style="margin:0;padding:0;overflow:hidden;">
-            <script>
-              window.location.replace("$BASENAME");
-            </script>
-            <noscript>
-              <a href="$BASENAME">Open SolveSpace</a>
-            </noscript>
-          </body>
-          </html>
-          EOF
-
-      # ---------------------------------------------------------
-      # 10. Version information
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 12. Add version information
+      # ==========================================================
       - name: Add version information
         shell: bash
         run: |
@@ -245,36 +267,15 @@ jobs:
           ${{ steps.version.outputs.date }}
 
           Build:
-          GitHub Actions / Emscripten WebAssembly
+          Emscripten WebAssembly
 
-          WARNING:
-          The official SolveSpace Web port is experimental.
+          Note:
+          SolveSpace Web is experimental upstream.
           EOF
 
-      # ---------------------------------------------------------
-      # 11. Verify WASM exists
-      # ---------------------------------------------------------
-      - name: Verify WebAssembly files
-        shell: bash
-        run: |
-          set -e
-
-          WASM_COUNT=$(find solvespace-web-android \
-            -maxdepth 1 \
-            -type f \
-            -name "*.wasm" \
-            | wc -l)
-
-          echo "WASM files: $WASM_COUNT"
-
-          if [ "$WASM_COUNT" -eq 0 ]; then
-            echo "ERROR: No WebAssembly file found."
-            exit 1
-          fi
-
-      # ---------------------------------------------------------
-      # 12. Create Android ZIP
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 13. Create ZIP
+      # ==========================================================
       - name: Create Android ZIP
         shell: bash
         run: |
@@ -282,21 +283,24 @@ jobs:
 
           cd solvespace-web-android
 
-          zip -r ../solvespace-web-android.zip .
+          zip -9 -r \
+            ../solvespace-web-android.zip \
+            .
 
-      # ---------------------------------------------------------
-      # 13. Upload GitHub Actions artifact
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 14. Upload GitHub Actions artifact
+      # ==========================================================
       - name: Upload Android artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: solvespace-web-android
           path: solvespace-web-android.zip
+          if-no-files-found: error
           retention-days: 90
 
-      # ---------------------------------------------------------
-      # 14. Copy web files into YOUR repository
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 15. Store the extracted files in YOUR repository
+      # ==========================================================
       - name: Update repository copy
         shell: bash
         run: |
@@ -318,9 +322,9 @@ jobs:
             git push
           fi
 
-      # ---------------------------------------------------------
-      # 15. Create downloadable GitHub Release
-      # ---------------------------------------------------------
+      # ==========================================================
+      # 16. Create downloadable release
+      # ==========================================================
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -330,9 +334,9 @@ jobs:
           prerelease: false
           files: solvespace-web-android.zip
           body: |
-            Latest SolveSpace WebAssembly build.
+            SolveSpace WebAssembly build.
 
-            Official repository:
+            Upstream:
             https://github.com/solvespace/solvespace
 
             Branch:
@@ -344,10 +348,11 @@ jobs:
             Commit date:
             ${{ steps.version.outputs.date }}
 
-            This package is intended to be served
-            from a local HTTP server on Android.
+            Built for local HTTP serving on Android.
 
             WARNING:
-            SolveSpace's official Web port is experimental.
+            SolveSpace Web is an experimental upstream port.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
