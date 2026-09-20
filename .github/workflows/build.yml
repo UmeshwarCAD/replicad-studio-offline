@@ -1,32 +1,173 @@
-name: Build Replicad Studio
+name: Update Replicad Studio Workbench
 
 on:
   workflow_dispatch:
+
+  schedule:
+    # Every Sunday at 02:00 UTC
+    - cron: "0 2 * * 0"
+
   push:
+    branches:
+      - main
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  build-replicad-studio:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout my repository
+        uses: actions/checkout@v4
 
-      - name: Clone Replicad Latest
-        run: git clone https://github.com/sgenoud/replicad.git temp
+      - name: Checkout latest Replicad
+        uses: actions/checkout@v4
+        with:
+          repository: sgenoud/replicad
+          ref: main
+          path: replicad-source
+          fetch-depth: 1
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: replicad-source/pnpm-lock.yaml
 
-      - name: Install and Build
-        working-directory: temp
+      - name: Enable Corepack
         run: |
-          npm install
-          npm run build --workspace=studio
-          ls -lh packages/studio/dist/
+          corepack enable
+          corepack prepare pnpm@9.13.2 --activate
 
-      - name: Upload Studio Files
+      - name: Install dependencies
+        working-directory: replicad-source
+        run: pnpm install --frozen-lockfile
+
+      - name: Find Studio package
+        working-directory: replicad-source
+        run: |
+          echo "Replicad source:"
+          find packages -maxdepth 2 -type f -name package.json | sort
+
+      - name: Build Replicad packages
+        working-directory: replicad-source
+        run: |
+          pnpm --filter replicad build
+
+      - name: Build Studio
+        working-directory: replicad-source
+        shell: bash
+        run: |
+          set -e
+
+          if [ -d "packages/studio" ]; then
+            cd packages/studio
+          elif [ -d "studio" ]; then
+            cd studio
+          else
+            echo "Studio directory was not found."
+            echo "Available packages:"
+            find packages -maxdepth 2 -type d | sort
+            exit 1
+          fi
+
+          echo "Building Studio from:"
+          pwd
+
+          pnpm install --frozen-lockfile || pnpm install
+          pnpm build
+
+      - name: Locate Studio build
+        working-directory: replicad-source
+        shell: bash
+        run: |
+          echo "Searching for build output..."
+
+          find . \
+            -type d \
+            \( -name dist -o -name build \) \
+            -not -path "*/node_modules/*" \
+            -print
+
+      - name: Copy Studio to local-storage directory
+        shell: bash
+        run: |
+          set -e
+
+          rm -rf replicad-studio
+
+          STUDIO_DIST=""
+
+          for DIR in \
+            "replicad-source/packages/studio/dist" \
+            "replicad-source/packages/studio/build" \
+            "replicad-source/studio/dist" \
+            "replicad-source/studio/build"
+          do
+            if [ -d "$DIR" ]; then
+              STUDIO_DIST="$DIR"
+              break
+            fi
+          done
+
+          if [ -z "$STUDIO_DIST" ]; then
+            echo "Could not locate Studio build output."
+            find replicad-source \
+              -type d \
+              \( -name dist -o -name build \) \
+              -not -path "*/node_modules/*"
+            exit 1
+          fi
+
+          echo "Using Studio build: $STUDIO_DIST"
+
+          mkdir -p replicad-studio
+          cp -a "$STUDIO_DIST"/. replicad-studio/
+
+      - name: Save upstream commit information
+        run: |
+          cd replicad-source
+
+          echo "Replicad commit:"
+          git rev-parse HEAD
+
+          git rev-parse HEAD > ../replicad-studio/REPLICAD_COMMIT.txt
+
+          {
+            echo "Replicad repository: https://github.com/sgenoud/replicad"
+            echo "Commit: $(git rev-parse HEAD)"
+            echo "Date: $(git show -s --format=%cI HEAD)"
+          } > ../replicad-studio/VERSION.txt
+
+      - name: Create ZIP for Android
+        run: |
+          rm -f replicad-studio.zip
+
+          cd replicad-studio
+          zip -r ../replicad-studio.zip .
+
+      - name: Upload Studio ZIP as workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: replicad-studio-dist
-          path: temp/packages/studio/dist/
+          name: replicad-studio-workbench
+          path: replicad-studio.zip
+          retention-days: 90
+
+      - name: Commit latest Studio files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add replicad-studio replicad-studio.zip
+
+          if git diff --cached --quiet; then
+            echo "No Studio changes."
+          else
+            git commit -m "Update Replicad Studio Workbench"
+            git push
+          fi
+
+
