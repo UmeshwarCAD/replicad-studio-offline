@@ -1,0 +1,353 @@
+name: Build SolveSpace Web for Android
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Check upstream every Sunday
+    - cron: "30 2 * * 0"
+
+permissions:
+  contents: write
+
+jobs:
+  build-solvespace-web:
+    name: Build SolveSpace WebAssembly
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ---------------------------------------------------------
+      # 1. Checkout YOUR repository
+      # ---------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ---------------------------------------------------------
+      # 2. Checkout latest official SolveSpace
+      # ---------------------------------------------------------
+      - name: Checkout SolveSpace
+        uses: actions/checkout@v4
+        with:
+          repository: solvespace/solvespace
+          ref: master
+          path: solvespace
+          fetch-depth: 1
+          submodules: recursive
+
+      # ---------------------------------------------------------
+      # 3. Record upstream commit
+      # ---------------------------------------------------------
+      - name: Record SolveSpace version
+        id: version
+        working-directory: solvespace
+        shell: bash
+        run: |
+          COMMIT=$(git rev-parse HEAD)
+          SHORT=$(git rev-parse --short HEAD)
+          DATE=$(git show -s --format=%cI HEAD)
+
+          echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
+          echo "short=$SHORT" >> "$GITHUB_OUTPUT"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+
+          echo "SolveSpace commit:"
+          echo "$COMMIT"
+
+      # ---------------------------------------------------------
+      # 4. Install build dependencies
+      # ---------------------------------------------------------
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y \
+            git \
+            build-essential \
+            cmake \
+            python3 \
+            ninja-build
+
+      # ---------------------------------------------------------
+      # 5. Install Emscripten
+      #
+      # Official SolveSpace documentation requires Emscripten
+      # for the Web build.
+      # ---------------------------------------------------------
+      - name: Install Emscripten
+        shell: bash
+        run: |
+          git clone --depth 1 \
+            https://github.com/emscripten-core/emsdk.git \
+            "$HOME/emsdk"
+
+          cd "$HOME/emsdk"
+
+          ./emsdk install latest
+          ./emsdk activate latest
+
+          source ./emsdk_env.sh
+
+          emcc --version
+
+      # ---------------------------------------------------------
+      # 6. Build SolveSpace WebAssembly
+      # ---------------------------------------------------------
+      - name: Build SolveSpace Web
+        working-directory: solvespace
+        shell: bash
+        run: |
+          set -e
+
+          source "$HOME/emsdk/emsdk_env.sh"
+
+          rm -rf build
+
+          mkdir build
+          cd build
+
+          emcmake cmake .. \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DENABLE_LTO=ON \
+            -DENABLE_TESTS=OFF \
+            -DENABLE_CLI=OFF \
+            -DENABLE_COVERAGE=OFF
+
+          make -j"$(nproc)"
+
+      # ---------------------------------------------------------
+      # 7. Verify WebAssembly build
+      # ---------------------------------------------------------
+      - name: Verify web build
+        working-directory: solvespace
+        shell: bash
+        run: |
+          set -e
+
+          echo "Build directory:"
+          find build/bin -maxdepth 1 -type f -print | sort
+
+          echo ""
+          echo "Web files:"
+
+          find build/bin \
+            -maxdepth 1 \
+            -type f \
+            \( \
+              -name "*.html" \
+              -o -name "*.js" \
+              -o -name "*.wasm" \
+              -o -name "*.data" \
+            \) \
+            -print
+
+          WEB_HTML=$(find build/bin \
+            -maxdepth 1 \
+            -type f \
+            -name "solvespace*.html" \
+            | head -1)
+
+          if [ -z "$WEB_HTML" ]; then
+            echo "ERROR: SolveSpace Web HTML output was not found."
+            exit 1
+          fi
+
+          echo ""
+          echo "Found:"
+          echo "$WEB_HTML"
+
+      # ---------------------------------------------------------
+      # 8. Prepare Android static web directory
+      # ---------------------------------------------------------
+      - name: Prepare Android package
+        shell: bash
+        run: |
+          set -e
+
+          rm -rf solvespace-web-android
+          mkdir -p solvespace-web-android
+
+          cp -a \
+            solvespace/build/bin/. \
+            solvespace-web-android/
+
+      # ---------------------------------------------------------
+      # 9. Create a simple index.html
+      #
+      # SolveSpace may generate a solvespace*.html filename.
+      # This makes the Android HTTP server open index.html.
+      # ---------------------------------------------------------
+      - name: Create Android index
+        shell: bash
+        run: |
+          set -e
+
+          HTML=$(find solvespace-web-android \
+            -maxdepth 1 \
+            -type f \
+            -name "solvespace*.html" \
+            | head -1)
+
+          if [ -z "$HTML" ]; then
+            echo "No SolveSpace HTML file found."
+            exit 1
+          fi
+
+          BASENAME=$(basename "$HTML")
+
+          cat > solvespace-web-android/index.html <<EOF
+          <!doctype html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport"
+                  content="width=device-width,
+                           initial-scale=1,
+                           maximum-scale=1,
+                           user-scalable=no">
+            <title>SolveSpace Web</title>
+          </head>
+          <body style="margin:0;padding:0;overflow:hidden;">
+            <script>
+              window.location.replace("$BASENAME");
+            </script>
+            <noscript>
+              <a href="$BASENAME">Open SolveSpace</a>
+            </noscript>
+          </body>
+          </html>
+          EOF
+
+      # ---------------------------------------------------------
+      # 10. Version information
+      # ---------------------------------------------------------
+      - name: Add version information
+        shell: bash
+        run: |
+          cat > solvespace-web-android/SOLVESPACE-VERSION.txt <<EOF
+          SolveSpace Web
+
+          Official repository:
+          https://github.com/solvespace/solvespace
+
+          Branch:
+          master
+
+          Commit:
+          ${{ steps.version.outputs.commit }}
+
+          Short commit:
+          ${{ steps.version.outputs.short }}
+
+          Commit date:
+          ${{ steps.version.outputs.date }}
+
+          Build:
+          GitHub Actions / Emscripten WebAssembly
+
+          WARNING:
+          The official SolveSpace Web port is experimental.
+          EOF
+
+      # ---------------------------------------------------------
+      # 11. Verify WASM exists
+      # ---------------------------------------------------------
+      - name: Verify WebAssembly files
+        shell: bash
+        run: |
+          set -e
+
+          WASM_COUNT=$(find solvespace-web-android \
+            -maxdepth 1 \
+            -type f \
+            -name "*.wasm" \
+            | wc -l)
+
+          echo "WASM files: $WASM_COUNT"
+
+          if [ "$WASM_COUNT" -eq 0 ]; then
+            echo "ERROR: No WebAssembly file found."
+            exit 1
+          fi
+
+      # ---------------------------------------------------------
+      # 12. Create Android ZIP
+      # ---------------------------------------------------------
+      - name: Create Android ZIP
+        shell: bash
+        run: |
+          rm -f solvespace-web-android.zip
+
+          cd solvespace-web-android
+
+          zip -r ../solvespace-web-android.zip .
+
+      # ---------------------------------------------------------
+      # 13. Upload GitHub Actions artifact
+      # ---------------------------------------------------------
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: solvespace-web-android
+          path: solvespace-web-android.zip
+          retention-days: 90
+
+      # ---------------------------------------------------------
+      # 14. Copy web files into YOUR repository
+      # ---------------------------------------------------------
+      - name: Update repository copy
+        shell: bash
+        run: |
+          rm -rf solvespace-web
+          cp -a solvespace-web-android solvespace-web
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add solvespace-web
+
+          if git diff --cached --quiet; then
+            echo "No SolveSpace changes."
+          else
+            git commit \
+              -m "Update SolveSpace Web ${{ steps.version.outputs.short }}"
+
+            git push
+          fi
+
+      # ---------------------------------------------------------
+      # 15. Create downloadable GitHub Release
+      # ---------------------------------------------------------
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: solvespace-web-latest
+          name: SolveSpace Web Latest
+          make_latest: true
+          prerelease: false
+          files: solvespace-web-android.zip
+          body: |
+            Latest SolveSpace WebAssembly build.
+
+            Official repository:
+            https://github.com/solvespace/solvespace
+
+            Branch:
+            master
+
+            Commit:
+            ${{ steps.version.outputs.commit }}
+
+            Commit date:
+            ${{ steps.version.outputs.date }}
+
+            This package is intended to be served
+            from a local HTTP server on Android.
+
+            WARNING:
+            SolveSpace's official Web port is experimental.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
