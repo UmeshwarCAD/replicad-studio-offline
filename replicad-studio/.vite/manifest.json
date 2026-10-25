@@ -586,7 +586,7 @@
     ]
   },
   "../../node_modules/monaco-editor/esm/vs/language/typescript/tsMode.js": {
-    "file": "assets/tsMode-BCCWL5zP.js",
+    "file": "assets/tsMode-0PcBmhZK.js",
     "name": "tsMode",
     "src": "../../node_modules/monaco-editor/esm/vs/language/typescript/tsMode.js",
     "isDynamicEntry": true,
@@ -624,7 +624,7 @@
     "name": "rolldown-runtime"
   },
   "index.html": {
-    "file": "assets/index-BGZ6wVCn.js",
+    "file": "assets/index-BjU4S9Pi.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -643,7 +643,7 @@
     ]
   },
   "src/workbench/Workbench.jsx": {
-    "file": "assets/Workbench-BrC8s8_f.js",
+    "file": "assets/Workbench-8R_GdER0.js",
     "name": "Workbench",
     "src": "src/workbench/Workbench.jsx",
     "isDynamicEntry": true,

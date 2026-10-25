@@ -1,5 +1,5 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/tsMode-BCCWL5zP.js","assets/editor.api-W58rGS9V.js","assets/rolldown-runtime-Dd_uD5pT.js","assets/editor-C527czWM.css","assets/freemarker2-BjIXrtFJ.js","assets/handlebars-D1sWc7m1.js","assets/html-ToHl5pGH.js","assets/javascript-CfcIW0PK.js","assets/typescript-BZEtPGMu.js","assets/liquid-DeJTtOIf.js","assets/mdx-CgJans9j.js","assets/python-BP_wwd1P.js","assets/razor-DE-WEQPv.js","assets/xml-CgzehADR.js","assets/yaml-Ddtfxkb_.js","assets/cssMode-BWYvs2Eh.js","assets/htmlMode-Dq5Fw_BW.js","assets/jsonMode-BpLySZNM.js"])))=>i.map(i=>d[i]);
-import{i as e,n as t,t as n}from"./rolldown-runtime-Dd_uD5pT.js";import{A as r,C as i,D as a,E as o,O as s,S as c,T as l,_ as u,a as d,b as f,c as p,d as m,f as h,g,h as _,i as v,j as y,k as b,l as x,m as S,n as C,o as w,p as T,r as E,s as D,t as ee,u as te,v as ne,w as re,x as ie,y as ae}from"./index-BGZ6wVCn.js";import{$ as oe,$a as se,$c as ce,$i as le,$l as ue,$n as de,$o as O,$r as fe,$s as pe,$t as me,A as k,Aa as A,Ac as he,Ai as j,Al as ge,An as _e,Ao as ve,Ar as ye,As as be,At as xe,Au as Se,B as Ce,Ba as we,Bc as Te,Bi as Ee,Bl as M,Bn as De,Bo as Oe,Br as ke,Bs as N,Bt as Ae,Bu as je,C as Me,Ca as Ne,Cc as Pe,Ci as Fe,Cl as Ie,Cn as Le,Co as Re,Cr as ze,Cs as Be,Ct as Ve,Cu as He,D as Ue,Da as We,Dc as Ge,Di as Ke,Dl as qe,Dn as Je,Do as Ye,Dr as Xe,Ds as Ze,Dt as Qe,Du as $e,E as et,Ea as tt,Ec as nt,Ei as rt,El as P,En as it,Eo as at,Er as ot,Es as st,Et as ct,Eu as lt,F as ut,Fa as dt,Fc as ft,Fi as F,Fl as pt,Fn as I,Fo as mt,Fr as ht,Fs as L,Ft as gt,Fu as _t,G as vt,Ga as yt,Gc as bt,Gi as xt,Gl as St,Gn as Ct,Go as wt,Gr as Tt,Gs as Et,Gt as Dt,H as Ot,Ha as kt,Hc as At,Hi as jt,Hl as Mt,Hn as R,Ho as Nt,Hr as Pt,Hs as Ft,Ht as It,Hu as Lt,I as Rt,Ia as zt,Ic as Bt,Ii as Vt,Il as Ht,In as Ut,Io as Wt,Ir as Gt,Is as Kt,It as qt,Iu as Jt,J as Yt,Ja as Xt,Jc as z,Ji as Zt,Jl as Qt,Jn as $t,Jo as en,Jr as tn,Js as nn,Jt as rn,K as an,Ka as on,Kc as sn,Ki as cn,Kl as ln,Kn as un,Ko as B,Kr as dn,Ks as fn,Kt as pn,L as mn,La as hn,Lc as gn,Li as _n,Ll as vn,Ln as yn,Lo as bn,Lr as xn,Ls as Sn,Lt as Cn,Lu as wn,M as Tn,Ma as En,Mc as Dn,Mi as On,Ml as kn,Mn as An,Mo as jn,Mr as Mn,Ms as Nn,Mt as Pn,Mu as Fn,N as In,Na as Ln,Nc as Rn,Ni as zn,Nl as Bn,Nn as Vn,No as Hn,Nr as Un,Ns as Wn,Nt as Gn,Nu as Kn,O as qn,Oa as Jn,Oc as Yn,Oi as Xn,Ol as Zn,On as V,Oo as Qn,Or as $n,Os as er,Ot as tr,Ou as nr,P as rr,Pa as ir,Pc as ar,Pi as or,Pl as sr,Pn as cr,Po as lr,Pr as ur,Ps as dr,Pt as fr,Pu as pr,Q as mr,Qa as hr,Qc as gr,Qi as _r,Ql as vr,Qn as yr,Qo as H,Qr as br,Qs as xr,Qt as Sr,R as Cr,Ra as wr,Rc as Tr,Ri as Er,Rl as Dr,Rn as Or,Ro as kr,Rr as Ar,Rs as jr,Rt as Mr,Ru as Nr,S as Pr,Sa as Fr,Sc as Ir,Si as Lr,Sl as Rr,Sn as zr,So as Br,Sr as Vr,Ss as Hr,St as Ur,Su as Wr,T as Gr,Ta as Kr,Tc as qr,Ti as Jr,Tl as Yr,Tn as Xr,To as Zr,Tr as Qr,Ts as $r,Tt as ei,Tu as ti,U as ni,Ua as ri,Uc as ii,Ui as ai,Ul as oi,Un as si,Uo as ci,Ur as li,Us as ui,Ut as di,V as fi,Va as pi,Vc as mi,Vi as hi,Vl as gi,Vn as _i,Vo as vi,Vr as yi,Vs as bi,Vt as xi,Vu as Si,W as Ci,Wa as wi,Wc as Ti,Wi as Ei,Wl as Di,Wn as Oi,Wo as ki,Wr as Ai,Ws as ji,Wt as Mi,X as Ni,Xa as Pi,Xc as Fi,Xi as Ii,Xl as Li,Xn as Ri,Xo as zi,Xr as Bi,Xs as Vi,Xt as Hi,Y as Ui,Ya as Wi,Yc as Gi,Yi as Ki,Yl as qi,Yn as Ji,Yo as Yi,Yr as Xi,Ys as Zi,Yt as Qi,Z as $i,Za as ea,Zc as ta,Zi as na,Zl as ra,Zn as ia,Zo as aa,Zr as oa,Zs as sa,Zt as ca,_ as la,_a as ua,_c as da,_i as fa,_l as pa,_n as ma,_o as ha,_r as ga,_s as _a,_t as va,_u as ya,a as ba,aa as xa,ac as Sa,ai as Ca,al as wa,an as Ta,ao as Ea,ar as Da,as as Oa,at as ka,b as Aa,ba as ja,bc as Ma,bi as U,bl as W,bn as Na,bo as Pa,br as Fa,bs as Ia,bt as La,bu as Ra,c as za,ca as Ba,cc as Va,ci as Ha,cl as Ua,cn as Wa,co as Ga,cr as Ka,cs as qa,ct as Ja,cu as Ya,d as Xa,da as Za,dc as Qa,di as $a,dl as eo,dn as to,do as no,dr as ro,ds as io,dt as ao,du as oo,ea as so,ec as co,ei as lo,el as uo,en as fo,eo as po,er as mo,es as ho,et as go,eu as _o,f as vo,fa as yo,fc as bo,fi as xo,fl as So,fn as Co,fo as wo,fr as To,fs as Eo,ft as Do,fu as Oo,g as ko,ga as Ao,gc as jo,gi as Mo,gl as No,gn as Po,go as Fo,gr as Io,gs as Lo,gt as Ro,gu as zo,h as Bo,ha as Vo,hc as Ho,hi as Uo,hl as Wo,hn as Go,ho as Ko,hr as qo,hs as Jo,ht as Yo,hu as Xo,i as Zo,ia as Qo,ic as $o,ii as es,il as ts,in as ns,io as rs,ir as is,is as as,it as os,iu as ss,j as cs,ja as ls,jc as us,ji as ds,jl as fs,jn as ps,jo as ms,jr as hs,js as gs,jt as _s,ju as vs,k as ys,ka as bs,kc as xs,ki as Ss,kl as Cs,kn as ws,ko as Ts,kr as Es,ks as Ds,kt as Os,ku as ks,l as As,la as js,lc as Ms,li as Ns,ll as Ps,ln as Fs,lo as Is,lr as Ls,ls as Rs,lt as zs,lu as Bs,m as Vs,ma as Hs,mc as Us,mi as Ws,ml as Gs,mn as Ks,mo as qs,mr as Js,ms as Ys,mt as Xs,mu as Zs,n as Qs,na as $s,nc as ec,ni as tc,nl as nc,nn as rc,no as ic,nr as ac,ns as oc,nu as sc,o as cc,oa as lc,oc as uc,oi as dc,ol as fc,on as pc,oo as mc,or as hc,os as gc,ot as _c,ou as vc,p as yc,pa as bc,pc as xc,pi as G,pl as Sc,pn as Cc,po as wc,pr as Tc,ps as Ec,pt as Dc,pu as Oc,q as kc,qa as Ac,qc as jc,qi as Mc,ql as Nc,qn as Pc,qo as Fc,qr as Ic,qs as Lc,qt as Rc,r as zc,ra as Bc,rc as Vc,ri as Hc,rl as Uc,rn as Wc,ro as Gc,rr as Kc,rs as qc,rt as Jc,ru as Yc,s as Xc,sa as Zc,sc as Qc,si as $c,sl as el,sn as tl,so as nl,sr as rl,ss as il,st as al,su as ol,t as sl,ta as cl,tc as ll,ti as ul,tl as dl,tn as fl,to as pl,tr as ml,ts as hl,tt as gl,tu as _l,u as vl,ua as yl,uc as bl,ui as xl,ul as Sl,un as Cl,uo as wl,ur as Tl,us as El,ut as Dl,uu as Ol,v as kl,va as Al,vc as jl,vi as Ml,vl as Nl,vn as Pl,vo as Fl,vr as Il,vs as K,vt as Ll,vu as q,w as Rl,wa as zl,wc as Bl,wi as Vl,wl as Hl,wn as Ul,wo as Wl,wr as Gl,ws as Kl,wt as ql,wu as Jl,x as Yl,xa as Xl,xc as Zl,xi as Ql,xl as $l,xn as eu,xo as tu,xr as nu,xs as ru,xt as iu,xu as au,y as ou,ya as su,yc as cu,yi as lu,yl as uu,yn as du,yo as fu,yr as pu,ys as mu,yt as hu,yu as gu,z as _u,za as vu,zc as yu,zi as bu,zl as xu,zn as Su,zo as Cu,zr as wu,zs as Tu,zt as Eu,zu as Du}from"./editor.api-W58rGS9V.js";var Ou=e(y()),ku=b(),Au=e(ne(),1),ju=Object.defineProperty,Mu=Object.getOwnPropertyDescriptor,Nu=Object.getOwnPropertyNames,Pu=Object.prototype.hasOwnProperty,Fu=(e,t,n,r)=>{if(t&&typeof t==`object`||typeof t==`function`)for(let i of Nu(t))!Pu.call(e,i)&&i!==n&&ju(e,i,{get:()=>t[i],enumerable:!(r=Mu(t,i))||r.enumerable});return e},Iu=(e,t,n)=>(Fu(e,t,`default`),n&&Fu(n,t,`default`)),Lu=`5.4.5`,Ru={};Iu(Ru,Vs);var zu=(e=>(e[e.None=0]=`None`,e[e.CommonJS=1]=`CommonJS`,e[e.AMD=2]=`AMD`,e[e.UMD=3]=`UMD`,e[e.System=4]=`System`,e[e.ES2015=5]=`ES2015`,e[e.ESNext=99]=`ESNext`,e))(zu||{}),Bu=(e=>(e[e.None=0]=`None`,e[e.Preserve=1]=`Preserve`,e[e.React=2]=`React`,e[e.ReactNative=3]=`ReactNative`,e[e.ReactJSX=4]=`ReactJSX`,e[e.ReactJSXDev=5]=`ReactJSXDev`,e))(Bu||{}),Vu=(e=>(e[e.CarriageReturnLineFeed=0]=`CarriageReturnLineFeed`,e[e.LineFeed=1]=`LineFeed`,e))(Vu||{}),Hu=(e=>(e[e.ES3=0]=`ES3`,e[e.ES5=1]=`ES5`,e[e.ES2015=2]=`ES2015`,e[e.ES2016=3]=`ES2016`,e[e.ES2017=4]=`ES2017`,e[e.ES2018=5]=`ES2018`,e[e.ES2019=6]=`ES2019`,e[e.ES2020=7]=`ES2020`,e[e.ESNext=99]=`ESNext`,e[e.JSON=100]=`JSON`,e[e.Latest=99]=`Latest`,e))(Hu||{}),Uu=(e=>(e[e.Classic=1]=`Classic`,e[e.NodeJs=2]=`NodeJs`,e))(Uu||{}),Wu=class{constructor(e,t,n,r,i){this._onDidChange=new Ru.Emitter,this._onDidExtraLibsChange=new Ru.Emitter,this._extraLibs=Object.create(null),this._removedExtraLibs=Object.create(null),this._eagerModelSync=!1,this.setCompilerOptions(e),this.setDiagnosticsOptions(t),this.setWorkerOptions(n),this.setInlayHintsOptions(r),this.setModeConfiguration(i),this._onDidExtraLibsChangeTimeout=-1}get onDidChange(){return this._onDidChange.event}get onDidExtraLibsChange(){return this._onDidExtraLibsChange.event}get modeConfiguration(){return this._modeConfiguration}get workerOptions(){return this._workerOptions}get inlayHintsOptions(){return this._inlayHintsOptions}getExtraLibs(){return this._extraLibs}addExtraLib(e,t){let n;if(n=t===void 0?`ts:extralib-${Math.random().toString(36).substring(2,15)}`:t,this._extraLibs[n]&&this._extraLibs[n].content===e)return{dispose:()=>{}};let r=1;return this._removedExtraLibs[n]&&(r=this._removedExtraLibs[n]+1),this._extraLibs[n]&&(r=this._extraLibs[n].version+1),this._extraLibs[n]={content:e,version:r},this._fireOnDidExtraLibsChangeSoon(),{dispose:()=>{let e=this._extraLibs[n];e&&e.version===r&&(delete this._extraLibs[n],this._removedExtraLibs[n]=r,this._fireOnDidExtraLibsChangeSoon())}}}setExtraLibs(e){for(let e in this._extraLibs)this._removedExtraLibs[e]=this._extraLibs[e].version;if(this._extraLibs=Object.create(null),e&&e.length>0)for(let t of e){let e=t.filePath||`ts:extralib-${Math.random().toString(36).substring(2,15)}`,n=t.content,r=1;this._removedExtraLibs[e]&&(r=this._removedExtraLibs[e]+1),this._extraLibs[e]={content:n,version:r}}this._fireOnDidExtraLibsChangeSoon()}_fireOnDidExtraLibsChangeSoon(){this._onDidExtraLibsChangeTimeout===-1&&(this._onDidExtraLibsChangeTimeout=window.setTimeout(()=>{this._onDidExtraLibsChangeTimeout=-1,this._onDidExtraLibsChange.fire(void 0)},0))}getCompilerOptions(){return this._compilerOptions}setCompilerOptions(e){this._compilerOptions=e||Object.create(null),this._onDidChange.fire(void 0)}getDiagnosticsOptions(){return this._diagnosticsOptions}setDiagnosticsOptions(e){this._diagnosticsOptions=e||Object.create(null),this._onDidChange.fire(void 0)}setWorkerOptions(e){this._workerOptions=e||Object.create(null),this._onDidChange.fire(void 0)}setInlayHintsOptions(e){this._inlayHintsOptions=e||Object.create(null),this._onDidChange.fire(void 0)}setMaximumWorkerIdleTime(e){}setEagerModelSync(e){this._eagerModelSync=e}getEagerModelSync(){return this._eagerModelSync}setModeConfiguration(e){this._modeConfiguration=e||Object.create(null),this._onDidChange.fire(void 0)}},Gu=Lu,Ku={completionItems:!0,hovers:!0,documentSymbols:!0,definitions:!0,references:!0,documentHighlights:!0,rename:!0,diagnostics:!0,documentRangeFormattingEdits:!0,signatureHelp:!0,onTypeFormattingEdits:!0,codeActions:!0,inlayHints:!0},qu=new Wu({allowNonTsExtensions:!0,target:99},{noSemanticValidation:!1,noSyntaxValidation:!1,onlyVisible:!1},{},{},Ku),Ju=new Wu({allowNonTsExtensions:!0,allowJs:!0,target:99},{noSemanticValidation:!0,noSyntaxValidation:!1,onlyVisible:!1},{},{},Ku),Yu=()=>Zu().then(e=>e.getTypeScriptWorker()),Xu=()=>Zu().then(e=>e.getJavaScriptWorker());Ru.languages.typescript={ModuleKind:zu,JsxEmit:Bu,NewLineKind:Vu,ScriptTarget:Hu,ModuleResolutionKind:Uu,typescriptVersion:Gu,typescriptDefaults:qu,javascriptDefaults:Ju,getTypeScriptWorker:Yu,getJavaScriptWorker:Xu};function Zu(){return u(()=>import(`./tsMode-BCCWL5zP.js`),__vite__mapDeps([0,1,2,3]))}Ru.languages.onLanguage(`typescript`,()=>Zu().then(e=>e.setupTypeScript(qu))),Ru.languages.onLanguage(`javascript`,()=>Zu().then(e=>e.setupJavaScript(Ju)));var Qu=n((e=>{var t=60103,n=60106,r=60107,i=60108,a=60114,o=60109,s=60110,c=60112,l=60113,u=60120,d=60115,f=60116;if(typeof Symbol==`function`&&Symbol.for){var p=Symbol.for;t=p(`react.element`),n=p(`react.portal`),r=p(`react.fragment`),i=p(`react.strict_mode`),a=p(`react.profiler`),o=p(`react.provider`),s=p(`react.context`),c=p(`react.forward_ref`),l=p(`react.suspense`),u=p(`react.suspense_list`),d=p(`react.memo`),f=p(`react.lazy`),p(`react.block`),p(`react.server.block`),p(`react.fundamental`),p(`react.debug_trace_mode`),p(`react.legacy_hidden`)}function m(e){if(typeof e==`object`&&e){var p=e.$$typeof;switch(p){case t:switch(e=e.type,e){case r:case a:case i:case l:case u:return e;default:switch(e&&=e.$$typeof,e){case s:case c:case f:case d:case o:return e;default:return p}}case n:return p}}}e.isFragment=function(e){return m(e)===r}})),$u=n(((e,t)=>{t.exports=Qu()}))();function ed(e,t){let n=getComputedStyle(t);if(!n)return;let r=e===cd.Horizontal?t.clientWidth:t.clientHeight;return r===0?void 0:(e===cd.Horizontal?r-=parseFloat(n.paddingLeft)+parseFloat(n.paddingRight):r-=parseFloat(n.paddingTop)+parseFloat(n.paddingBottom),r)}function td(e,t,n=[],r={condition:!0}){let{condition:i}=r,a=function(e,t){var n={};for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&t.indexOf(r)<0&&(n[r]=e[r]);if(e!=null&&typeof Object.getOwnPropertySymbols==`function`){var i=0;for(r=Object.getOwnPropertySymbols(e);i<r.length;i++)t.indexOf(r[i])<0&&Object.prototype.propertyIsEnumerable.call(e,r[i])&&(n[r[i]]=e[r[i]])}return n}(r,[`condition`]);(0,Ou.useEffect)((()=>(i&&window.addEventListener(e,t,a),()=>{i&&window.removeEventListener(e,t)})),[e,t,i,...n])}(function(e,t){t===void 0&&(t={});var n=t.insertAt;if(e&&typeof document<`u`){var r=document.head||document.getElementsByTagName(`head`)[0],i=document.createElement(`style`);i.type=`text/css`,n===`top`&&r.firstChild?r.insertBefore(i,r.firstChild):r.appendChild(i),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(document.createTextNode(e))}})(`/* === Main Container === */
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/tsMode-0PcBmhZK.js","assets/editor.api-W58rGS9V.js","assets/rolldown-runtime-Dd_uD5pT.js","assets/editor-C527czWM.css","assets/freemarker2-BjIXrtFJ.js","assets/handlebars-D1sWc7m1.js","assets/html-ToHl5pGH.js","assets/javascript-CfcIW0PK.js","assets/typescript-BZEtPGMu.js","assets/liquid-DeJTtOIf.js","assets/mdx-CgJans9j.js","assets/python-BP_wwd1P.js","assets/razor-DE-WEQPv.js","assets/xml-CgzehADR.js","assets/yaml-Ddtfxkb_.js","assets/cssMode-BWYvs2Eh.js","assets/htmlMode-Dq5Fw_BW.js","assets/jsonMode-BpLySZNM.js"])))=>i.map(i=>d[i]);
+import{i as e,n as t,t as n}from"./rolldown-runtime-Dd_uD5pT.js";import{A as r,C as i,D as a,E as o,O as s,S as c,T as l,_ as u,a as d,b as f,c as p,d as m,f as h,g,h as _,i as v,j as y,k as b,l as x,m as S,n as C,o as w,p as T,r as E,s as D,t as ee,u as te,v as ne,w as re,x as ie,y as ae}from"./index-BjU4S9Pi.js";import{$ as oe,$a as se,$c as ce,$i as le,$l as ue,$n as de,$o as O,$r as fe,$s as pe,$t as me,A as k,Aa as A,Ac as he,Ai as j,Al as ge,An as _e,Ao as ve,Ar as ye,As as be,At as xe,Au as Se,B as Ce,Ba as we,Bc as Te,Bi as Ee,Bl as M,Bn as De,Bo as Oe,Br as ke,Bs as N,Bt as Ae,Bu as je,C as Me,Ca as Ne,Cc as Pe,Ci as Fe,Cl as Ie,Cn as Le,Co as Re,Cr as ze,Cs as Be,Ct as Ve,Cu as He,D as Ue,Da as We,Dc as Ge,Di as Ke,Dl as qe,Dn as Je,Do as Ye,Dr as Xe,Ds as Ze,Dt as Qe,Du as $e,E as et,Ea as tt,Ec as nt,Ei as rt,El as P,En as it,Eo as at,Er as ot,Es as st,Et as ct,Eu as lt,F as ut,Fa as dt,Fc as ft,Fi as F,Fl as pt,Fn as I,Fo as mt,Fr as ht,Fs as L,Ft as gt,Fu as _t,G as vt,Ga as yt,Gc as bt,Gi as xt,Gl as St,Gn as Ct,Go as wt,Gr as Tt,Gs as Et,Gt as Dt,H as Ot,Ha as kt,Hc as At,Hi as jt,Hl as Mt,Hn as R,Ho as Nt,Hr as Pt,Hs as Ft,Ht as It,Hu as Lt,I as Rt,Ia as zt,Ic as Bt,Ii as Vt,Il as Ht,In as Ut,Io as Wt,Ir as Gt,Is as Kt,It as qt,Iu as Jt,J as Yt,Ja as Xt,Jc as z,Ji as Zt,Jl as Qt,Jn as $t,Jo as en,Jr as tn,Js as nn,Jt as rn,K as an,Ka as on,Kc as sn,Ki as cn,Kl as ln,Kn as un,Ko as B,Kr as dn,Ks as fn,Kt as pn,L as mn,La as hn,Lc as gn,Li as _n,Ll as vn,Ln as yn,Lo as bn,Lr as xn,Ls as Sn,Lt as Cn,Lu as wn,M as Tn,Ma as En,Mc as Dn,Mi as On,Ml as kn,Mn as An,Mo as jn,Mr as Mn,Ms as Nn,Mt as Pn,Mu as Fn,N as In,Na as Ln,Nc as Rn,Ni as zn,Nl as Bn,Nn as Vn,No as Hn,Nr as Un,Ns as Wn,Nt as Gn,Nu as Kn,O as qn,Oa as Jn,Oc as Yn,Oi as Xn,Ol as Zn,On as V,Oo as Qn,Or as $n,Os as er,Ot as tr,Ou as nr,P as rr,Pa as ir,Pc as ar,Pi as or,Pl as sr,Pn as cr,Po as lr,Pr as ur,Ps as dr,Pt as fr,Pu as pr,Q as mr,Qa as hr,Qc as gr,Qi as _r,Ql as vr,Qn as yr,Qo as H,Qr as br,Qs as xr,Qt as Sr,R as Cr,Ra as wr,Rc as Tr,Ri as Er,Rl as Dr,Rn as Or,Ro as kr,Rr as Ar,Rs as jr,Rt as Mr,Ru as Nr,S as Pr,Sa as Fr,Sc as Ir,Si as Lr,Sl as Rr,Sn as zr,So as Br,Sr as Vr,Ss as Hr,St as Ur,Su as Wr,T as Gr,Ta as Kr,Tc as qr,Ti as Jr,Tl as Yr,Tn as Xr,To as Zr,Tr as Qr,Ts as $r,Tt as ei,Tu as ti,U as ni,Ua as ri,Uc as ii,Ui as ai,Ul as oi,Un as si,Uo as ci,Ur as li,Us as ui,Ut as di,V as fi,Va as pi,Vc as mi,Vi as hi,Vl as gi,Vn as _i,Vo as vi,Vr as yi,Vs as bi,Vt as xi,Vu as Si,W as Ci,Wa as wi,Wc as Ti,Wi as Ei,Wl as Di,Wn as Oi,Wo as ki,Wr as Ai,Ws as ji,Wt as Mi,X as Ni,Xa as Pi,Xc as Fi,Xi as Ii,Xl as Li,Xn as Ri,Xo as zi,Xr as Bi,Xs as Vi,Xt as Hi,Y as Ui,Ya as Wi,Yc as Gi,Yi as Ki,Yl as qi,Yn as Ji,Yo as Yi,Yr as Xi,Ys as Zi,Yt as Qi,Z as $i,Za as ea,Zc as ta,Zi as na,Zl as ra,Zn as ia,Zo as aa,Zr as oa,Zs as sa,Zt as ca,_ as la,_a as ua,_c as da,_i as fa,_l as pa,_n as ma,_o as ha,_r as ga,_s as _a,_t as va,_u as ya,a as ba,aa as xa,ac as Sa,ai as Ca,al as wa,an as Ta,ao as Ea,ar as Da,as as Oa,at as ka,b as Aa,ba as ja,bc as Ma,bi as U,bl as W,bn as Na,bo as Pa,br as Fa,bs as Ia,bt as La,bu as Ra,c as za,ca as Ba,cc as Va,ci as Ha,cl as Ua,cn as Wa,co as Ga,cr as Ka,cs as qa,ct as Ja,cu as Ya,d as Xa,da as Za,dc as Qa,di as $a,dl as eo,dn as to,do as no,dr as ro,ds as io,dt as ao,du as oo,ea as so,ec as co,ei as lo,el as uo,en as fo,eo as po,er as mo,es as ho,et as go,eu as _o,f as vo,fa as yo,fc as bo,fi as xo,fl as So,fn as Co,fo as wo,fr as To,fs as Eo,ft as Do,fu as Oo,g as ko,ga as Ao,gc as jo,gi as Mo,gl as No,gn as Po,go as Fo,gr as Io,gs as Lo,gt as Ro,gu as zo,h as Bo,ha as Vo,hc as Ho,hi as Uo,hl as Wo,hn as Go,ho as Ko,hr as qo,hs as Jo,ht as Yo,hu as Xo,i as Zo,ia as Qo,ic as $o,ii as es,il as ts,in as ns,io as rs,ir as is,is as as,it as os,iu as ss,j as cs,ja as ls,jc as us,ji as ds,jl as fs,jn as ps,jo as ms,jr as hs,js as gs,jt as _s,ju as vs,k as ys,ka as bs,kc as xs,ki as Ss,kl as Cs,kn as ws,ko as Ts,kr as Es,ks as Ds,kt as Os,ku as ks,l as As,la as js,lc as Ms,li as Ns,ll as Ps,ln as Fs,lo as Is,lr as Ls,ls as Rs,lt as zs,lu as Bs,m as Vs,ma as Hs,mc as Us,mi as Ws,ml as Gs,mn as Ks,mo as qs,mr as Js,ms as Ys,mt as Xs,mu as Zs,n as Qs,na as $s,nc as ec,ni as tc,nl as nc,nn as rc,no as ic,nr as ac,ns as oc,nu as sc,o as cc,oa as lc,oc as uc,oi as dc,ol as fc,on as pc,oo as mc,or as hc,os as gc,ot as _c,ou as vc,p as yc,pa as bc,pc as xc,pi as G,pl as Sc,pn as Cc,po as wc,pr as Tc,ps as Ec,pt as Dc,pu as Oc,q as kc,qa as Ac,qc as jc,qi as Mc,ql as Nc,qn as Pc,qo as Fc,qr as Ic,qs as Lc,qt as Rc,r as zc,ra as Bc,rc as Vc,ri as Hc,rl as Uc,rn as Wc,ro as Gc,rr as Kc,rs as qc,rt as Jc,ru as Yc,s as Xc,sa as Zc,sc as Qc,si as $c,sl as el,sn as tl,so as nl,sr as rl,ss as il,st as al,su as ol,t as sl,ta as cl,tc as ll,ti as ul,tl as dl,tn as fl,to as pl,tr as ml,ts as hl,tt as gl,tu as _l,u as vl,ua as yl,uc as bl,ui as xl,ul as Sl,un as Cl,uo as wl,ur as Tl,us as El,ut as Dl,uu as Ol,v as kl,va as Al,vc as jl,vi as Ml,vl as Nl,vn as Pl,vo as Fl,vr as Il,vs as K,vt as Ll,vu as q,w as Rl,wa as zl,wc as Bl,wi as Vl,wl as Hl,wn as Ul,wo as Wl,wr as Gl,ws as Kl,wt as ql,wu as Jl,x as Yl,xa as Xl,xc as Zl,xi as Ql,xl as $l,xn as eu,xo as tu,xr as nu,xs as ru,xt as iu,xu as au,y as ou,ya as su,yc as cu,yi as lu,yl as uu,yn as du,yo as fu,yr as pu,ys as mu,yt as hu,yu as gu,z as _u,za as vu,zc as yu,zi as bu,zl as xu,zn as Su,zo as Cu,zr as wu,zs as Tu,zt as Eu,zu as Du}from"./editor.api-W58rGS9V.js";var Ou=e(y()),ku=b(),Au=e(ne(),1),ju=Object.defineProperty,Mu=Object.getOwnPropertyDescriptor,Nu=Object.getOwnPropertyNames,Pu=Object.prototype.hasOwnProperty,Fu=(e,t,n,r)=>{if(t&&typeof t==`object`||typeof t==`function`)for(let i of Nu(t))!Pu.call(e,i)&&i!==n&&ju(e,i,{get:()=>t[i],enumerable:!(r=Mu(t,i))||r.enumerable});return e},Iu=(e,t,n)=>(Fu(e,t,`default`),n&&Fu(n,t,`default`)),Lu=`5.4.5`,Ru={};Iu(Ru,Vs);var zu=(e=>(e[e.None=0]=`None`,e[e.CommonJS=1]=`CommonJS`,e[e.AMD=2]=`AMD`,e[e.UMD=3]=`UMD`,e[e.System=4]=`System`,e[e.ES2015=5]=`ES2015`,e[e.ESNext=99]=`ESNext`,e))(zu||{}),Bu=(e=>(e[e.None=0]=`None`,e[e.Preserve=1]=`Preserve`,e[e.React=2]=`React`,e[e.ReactNative=3]=`ReactNative`,e[e.ReactJSX=4]=`ReactJSX`,e[e.ReactJSXDev=5]=`ReactJSXDev`,e))(Bu||{}),Vu=(e=>(e[e.CarriageReturnLineFeed=0]=`CarriageReturnLineFeed`,e[e.LineFeed=1]=`LineFeed`,e))(Vu||{}),Hu=(e=>(e[e.ES3=0]=`ES3`,e[e.ES5=1]=`ES5`,e[e.ES2015=2]=`ES2015`,e[e.ES2016=3]=`ES2016`,e[e.ES2017=4]=`ES2017`,e[e.ES2018=5]=`ES2018`,e[e.ES2019=6]=`ES2019`,e[e.ES2020=7]=`ES2020`,e[e.ESNext=99]=`ESNext`,e[e.JSON=100]=`JSON`,e[e.Latest=99]=`Latest`,e))(Hu||{}),Uu=(e=>(e[e.Classic=1]=`Classic`,e[e.NodeJs=2]=`NodeJs`,e))(Uu||{}),Wu=class{constructor(e,t,n,r,i){this._onDidChange=new Ru.Emitter,this._onDidExtraLibsChange=new Ru.Emitter,this._extraLibs=Object.create(null),this._removedExtraLibs=Object.create(null),this._eagerModelSync=!1,this.setCompilerOptions(e),this.setDiagnosticsOptions(t),this.setWorkerOptions(n),this.setInlayHintsOptions(r),this.setModeConfiguration(i),this._onDidExtraLibsChangeTimeout=-1}get onDidChange(){return this._onDidChange.event}get onDidExtraLibsChange(){return this._onDidExtraLibsChange.event}get modeConfiguration(){return this._modeConfiguration}get workerOptions(){return this._workerOptions}get inlayHintsOptions(){return this._inlayHintsOptions}getExtraLibs(){return this._extraLibs}addExtraLib(e,t){let n;if(n=t===void 0?`ts:extralib-${Math.random().toString(36).substring(2,15)}`:t,this._extraLibs[n]&&this._extraLibs[n].content===e)return{dispose:()=>{}};let r=1;return this._removedExtraLibs[n]&&(r=this._removedExtraLibs[n]+1),this._extraLibs[n]&&(r=this._extraLibs[n].version+1),this._extraLibs[n]={content:e,version:r},this._fireOnDidExtraLibsChangeSoon(),{dispose:()=>{let e=this._extraLibs[n];e&&e.version===r&&(delete this._extraLibs[n],this._removedExtraLibs[n]=r,this._fireOnDidExtraLibsChangeSoon())}}}setExtraLibs(e){for(let e in this._extraLibs)this._removedExtraLibs[e]=this._extraLibs[e].version;if(this._extraLibs=Object.create(null),e&&e.length>0)for(let t of e){let e=t.filePath||`ts:extralib-${Math.random().toString(36).substring(2,15)}`,n=t.content,r=1;this._removedExtraLibs[e]&&(r=this._removedExtraLibs[e]+1),this._extraLibs[e]={content:n,version:r}}this._fireOnDidExtraLibsChangeSoon()}_fireOnDidExtraLibsChangeSoon(){this._onDidExtraLibsChangeTimeout===-1&&(this._onDidExtraLibsChangeTimeout=window.setTimeout(()=>{this._onDidExtraLibsChangeTimeout=-1,this._onDidExtraLibsChange.fire(void 0)},0))}getCompilerOptions(){return this._compilerOptions}setCompilerOptions(e){this._compilerOptions=e||Object.create(null),this._onDidChange.fire(void 0)}getDiagnosticsOptions(){return this._diagnosticsOptions}setDiagnosticsOptions(e){this._diagnosticsOptions=e||Object.create(null),this._onDidChange.fire(void 0)}setWorkerOptions(e){this._workerOptions=e||Object.create(null),this._onDidChange.fire(void 0)}setInlayHintsOptions(e){this._inlayHintsOptions=e||Object.create(null),this._onDidChange.fire(void 0)}setMaximumWorkerIdleTime(e){}setEagerModelSync(e){this._eagerModelSync=e}getEagerModelSync(){return this._eagerModelSync}setModeConfiguration(e){this._modeConfiguration=e||Object.create(null),this._onDidChange.fire(void 0)}},Gu=Lu,Ku={completionItems:!0,hovers:!0,documentSymbols:!0,definitions:!0,references:!0,documentHighlights:!0,rename:!0,diagnostics:!0,documentRangeFormattingEdits:!0,signatureHelp:!0,onTypeFormattingEdits:!0,codeActions:!0,inlayHints:!0},qu=new Wu({allowNonTsExtensions:!0,target:99},{noSemanticValidation:!1,noSyntaxValidation:!1,onlyVisible:!1},{},{},Ku),Ju=new Wu({allowNonTsExtensions:!0,allowJs:!0,target:99},{noSemanticValidation:!0,noSyntaxValidation:!1,onlyVisible:!1},{},{},Ku),Yu=()=>Zu().then(e=>e.getTypeScriptWorker()),Xu=()=>Zu().then(e=>e.getJavaScriptWorker());Ru.languages.typescript={ModuleKind:zu,JsxEmit:Bu,NewLineKind:Vu,ScriptTarget:Hu,ModuleResolutionKind:Uu,typescriptVersion:Gu,typescriptDefaults:qu,javascriptDefaults:Ju,getTypeScriptWorker:Yu,getJavaScriptWorker:Xu};function Zu(){return u(()=>import(`./tsMode-0PcBmhZK.js`),__vite__mapDeps([0,1,2,3]))}Ru.languages.onLanguage(`typescript`,()=>Zu().then(e=>e.setupTypeScript(qu))),Ru.languages.onLanguage(`javascript`,()=>Zu().then(e=>e.setupJavaScript(Ju)));var Qu=n((e=>{var t=60103,n=60106,r=60107,i=60108,a=60114,o=60109,s=60110,c=60112,l=60113,u=60120,d=60115,f=60116;if(typeof Symbol==`function`&&Symbol.for){var p=Symbol.for;t=p(`react.element`),n=p(`react.portal`),r=p(`react.fragment`),i=p(`react.strict_mode`),a=p(`react.profiler`),o=p(`react.provider`),s=p(`react.context`),c=p(`react.forward_ref`),l=p(`react.suspense`),u=p(`react.suspense_list`),d=p(`react.memo`),f=p(`react.lazy`),p(`react.block`),p(`react.server.block`),p(`react.fundamental`),p(`react.debug_trace_mode`),p(`react.legacy_hidden`)}function m(e){if(typeof e==`object`&&e){var p=e.$$typeof;switch(p){case t:switch(e=e.type,e){case r:case a:case i:case l:case u:return e;default:switch(e&&=e.$$typeof,e){case s:case c:case f:case d:case o:return e;default:return p}}case n:return p}}}e.isFragment=function(e){return m(e)===r}})),$u=n(((e,t)=>{t.exports=Qu()}))();function ed(e,t){let n=getComputedStyle(t);if(!n)return;let r=e===cd.Horizontal?t.clientWidth:t.clientHeight;return r===0?void 0:(e===cd.Horizontal?r-=parseFloat(n.paddingLeft)+parseFloat(n.paddingRight):r-=parseFloat(n.paddingTop)+parseFloat(n.paddingBottom),r)}function td(e,t,n=[],r={condition:!0}){let{condition:i}=r,a=function(e,t){var n={};for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&t.indexOf(r)<0&&(n[r]=e[r]);if(e!=null&&typeof Object.getOwnPropertySymbols==`function`){var i=0;for(r=Object.getOwnPropertySymbols(e);i<r.length;i++)t.indexOf(r[i])<0&&Object.prototype.propertyIsEnumerable.call(e,r[i])&&(n[r[i]]=e[r[i]])}return n}(r,[`condition`]);(0,Ou.useEffect)((()=>(i&&window.addEventListener(e,t,a),()=>{i&&window.removeEventListener(e,t)})),[e,t,i,...n])}(function(e,t){t===void 0&&(t={});var n=t.insertAt;if(e&&typeof document<`u`){var r=document.head||document.getElementsByTagName(`head`)[0],i=document.createElement(`style`);i.type=`text/css`,n===`top`&&r.firstChild?r.insertBefore(i,r.firstChild):r.appendChild(i),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(document.createTextNode(e))}})(`/* === Main Container === */
 .__dbk__container {
   height: 100%;
   width: 100%;
@@ -177,7 +177,6 @@ import { Box } from 'manifold-3d';\r
 import { BRepAdaptor_CompCurve } from 'replicad-opencascadejs';\r
 import { BRepAdaptor_Curve } from 'replicad-opencascadejs';\r
 import { BRepExtrema_DistShapeShape } from 'replicad-opencascadejs';\r
-import { default as default_2 } from 'opentype.js';\r
 import { Geom2d_Curve } from 'replicad-opencascadejs';\r
 import { Geom2dAdaptor_Curve } from 'replicad-opencascadejs';\r
 import { Geom_Surface } from 'replicad-opencascadejs';\r
@@ -197,6 +196,7 @@ import { Manifold } from 'manifold-3d';\r
 import { ManifoldToplevel } from 'manifold-3d';\r
 import { Mesh } from 'manifold-3d';\r
 import { OpenCascadeInstance } from 'replicad-opencascadejs';\r
+import * as opentype_2 from 'opentype.js';\r
 import { TDocStd_Document } from 'replicad-opencascadejs';\r
 import { TopAbs_ShapeEnum } from 'replicad-opencascadejs';\r
 import { TopoDS_Compound } from 'replicad-opencascadejs';\r
@@ -234,11 +234,17 @@ export declare class _3DShape<Type extends TopoDS_Shape> extends Shape<Type> imp
     /**\r
      * Builds a new shape out of the two, fused, shapes\r
      *\r
+     * Same-domain faces and edges are merged by default. Set\r
+     * \`options.simplify\` to \`false\` to skip this topology cleanup.\r
+     *\r
      * @category Shape Modifications\r
      */\r
     fuse(other: Shape3D, options?: BooleanOperationOptions): Shape3D;\r
     /**\r
-     * Builds a new shape by removing the tool tape from this shape\r
+     * Builds a new shape by removing the tool shape from this shape\r
+     *\r
+     * Same-domain faces and edges are merged by default. Set\r
+     * \`options.simplify\` to \`false\` to skip this topology cleanup.\r
      *\r
      * @category Shape Modifications\r
      */\r
@@ -246,9 +252,12 @@ export declare class _3DShape<Type extends TopoDS_Shape> extends Shape<Type> imp
     /**\r
      * Builds a new shape by intersecting this shape and another\r
      *\r
+     * Same-domain faces and edges are merged by default. Set\r
+     * \`options.simplify\` to \`false\` to skip this topology cleanup.\r
+     *\r
      * @category Shape Modifications\r
      */\r
-    intersect(tool: AnyShape): Shape3D;\r
+    intersect(tool: AnyShape, options?: Pick<BooleanOperationOptions, "simplify">): Shape3D;\r
     /**\r
      * Cuts this shape with a plane and retains one of its half-spaces.\r
      * Positive is the direction of the plane normal and is kept by default.\r
@@ -546,6 +555,14 @@ export declare class BlueprintSketcher extends BaseSketcher2d implements Generic
 \r
 export declare interface BooleanOperationOptions {\r
     optimisation?: "none" | "commonFace" | "sameFace";\r
+    /**\r
+     * Merge same-domain faces and edges after the Boolean operation.\r
+     * This cleans up topology; it does not simplify a mesh. Set to \`false\` to\r
+     * skip this cleanup, which can change downstream face and edge selection.\r
+     *\r
+     * @default true\r
+     */\r
+    simplify?: boolean;\r
 }\r
 \r
 /**\r
@@ -684,6 +701,15 @@ export declare class CompoundSketch implements SketchInterface {\r
     get innerSketches(): Sketch[];\r
     get wires(): AnyShape;\r
     face(): Face;\r
+    /**\r
+     * Extrudes this sketch up to a limiting face, returning only the new solid.\r
+     * The face is not modified or consumed. The sketch's default direction is\r
+     * used unless overridden; the reverse direction is tried if needed.\r
+     * The finite, trimmed limiting face must fully cap the extrusion once\r
+     * without crossing the profile. Use a trimmed face for closed surfaces.\r
+     * The sketch is consumed on success, but retained on failure.\r
+     */\r
+    extrudeUntil(limitingFace: Face, { extrusionDirection }?: ExtrudeUntilOptions): Shape3D;\r
     extrude(extrusionDistance: number, { extrusionDirection, extrusionProfile, twistAngle, origin, }?: {\r
         extrusionDirection?: Point;\r
         extrusionProfile?: ExtrusionProfile;\r
@@ -694,7 +720,7 @@ export declare class CompoundSketch implements SketchInterface {\r
      * Revolves the drawing on an axis (defined by its direction and an origin\r
      * (defaults to the sketch origin)\r
      */\r
-    revolve(revolutionAxis?: Point, { origin, angle }?: {\r
+    revolve(revolutionAxis?: Point | AxisName, { origin, angle }?: {\r
         origin?: Point;\r
         angle?: number;\r
     }): Shape3D;\r
@@ -1158,6 +1184,20 @@ export declare function exportSTEP(shapes?: ShapeConfig[], { unit, modelUnit }?:
     unit?: SupportedUnit;\r
     modelUnit?: SupportedUnit;\r
 }): Blob;\r
+\r
+/**\r
+ * Builds only the extrusion from explicit geometry and direction. No face\r
+ * selection or sketch ownership rules are applied here. None of the inputs\r
+ * are consumed. The finite, trimmed limiting face must fully cap the sweep once\r
+ * and must not cross the profile. The supplied direction is preferred; its\r
+ * reverse is tried when it cannot reach a complete cap.\r
+ */\r
+export declare function extrudeFaceUntil(profile: Face, target: Face, extrusionDirection: Point): Shape3D;\r
+\r
+export declare interface ExtrudeUntilOptions {\r
+    /** Defaults to the sketch's direction; its reverse is tried if needed. */\r
+    extrusionDirection?: Point;\r
+}\r
 \r
 export declare interface ExtrusionProfile {\r
     profile?: "s-curve" | "linear";\r
@@ -1720,7 +1760,7 @@ export declare interface GenericSweepConfig {\r
 \r
 declare type GenericTopo = TopologyMap[TopoEntity];\r
 \r
-export declare const getFont: (fontFamily?: string) => default_2.Font;\r
+export declare const getFont: (fontFamily?: string) => opentype_2.Font;\r
 \r
 export declare const getManifold: () => ManifoldToplevel;\r
 \r
@@ -1796,7 +1836,7 @@ export declare class LinearPhysicalProperties extends PhysicalProperties {\r
  *\r
  * The font should be in TTF\r
  */\r
-export declare function loadFont(fontPath: string | ArrayBuffer, fontFamily?: string, force?: boolean): Promise<default_2.Font>;\r
+export declare function loadFont(fontPath: string | ArrayBuffer, fontFamily?: string, force?: boolean): Promise<opentype_2.Font>;\r
 \r
 export declare const localGC: (debug?: boolean) => [<T extends Deletable>(v: T) => T, () => void, Set<Deletable> | undefined];\r
 \r
@@ -2246,6 +2286,34 @@ export declare class Shape<Type extends TopoDS_Shape> extends WrappingObj<Type> 
     scale(scale: number, center?: Point): this;\r
     get edges(): Edge[];\r
     get faces(): Face[];\r
+    /**\r
+     * Finds a unique edge using a finder function, which receives a fresh\r
+     * EdgeFinder and this shape. Throws if there is not exactly one match.\r
+     *\r
+     * @category Finders\r
+     */\r
+    findEdge(this: AnyShape, finderFcn: FinderFunction<EdgeFinder, AnyShape>): Edge;\r
+    /**\r
+     * Finds all matching edges using a finder function, which receives a fresh\r
+     * EdgeFinder and this shape.\r
+     *\r
+     * @category Finders\r
+     */\r
+    findEdges(this: AnyShape, finderFcn: FinderFunction<EdgeFinder, AnyShape>): Edge[];\r
+    /**\r
+     * Finds a unique face using a finder function, which receives a fresh\r
+     * FaceFinder and this shape. Throws if there is not exactly one match.\r
+     *\r
+     * @category Finders\r
+     */\r
+    findFace(this: AnyShape, finderFcn: FinderFunction<FaceFinder, AnyShape>): Face;\r
+    /**\r
+     * Finds all matching faces using a finder function, which receives a fresh\r
+     * FaceFinder and this shape.\r
+     *\r
+     * @category Finders\r
+     */\r
+    findFaces(this: AnyShape, finderFcn: FinderFunction<FaceFinder, AnyShape>): Face[];\r
     get solids(): Solid[];\r
     get wires(): Wire[];\r
     get boundingBox(): BoundingBox;\r
@@ -2379,10 +2447,19 @@ export declare class Sketch implements SketchInterface {\r
      * Revolves the drawing on an axis (defined by its direction and an origin\r
      * (defaults to the sketch origin)\r
      */\r
-    revolve(revolutionAxis?: Point, { origin, angle }?: {\r
+    revolve(revolutionAxis?: Point | AxisName, { origin, angle }?: {\r
         origin?: Point;\r
         angle?: number;\r
     }): Shape3D;\r
+    /**\r
+     * Extrudes this sketch up to a limiting face, returning only the new solid.\r
+     * The face is not modified or consumed. The sketch's default direction is\r
+     * used unless overridden; the reverse direction is tried if needed.\r
+     * The finite, trimmed limiting face must fully cap the extrusion once\r
+     * without crossing the profile. Use a trimmed face for closed surfaces.\r
+     * The sketch is consumed on success, like \`extrude\`, but retained on failure.\r
+     */\r
+    extrudeUntil(limitingFace: Face, { extrusionDirection }?: ExtrudeUntilOptions): Shape3D;\r
     /** Extrudes the sketch to a certain distance.(along the default direction\r
      * and origin of the sketch).\r
      *\r
@@ -2497,6 +2574,12 @@ export declare class Sketches {\r
     constructor(sketches: Array<Sketch | CompoundSketch>);\r
     wires(): AnyShape;\r
     faces(): AnyShape;\r
+    /**\r
+     * Extrudes each sketch up to the same limiting face, returning only the\r
+     * extrusions. The face is not consumed. Each sketch uses its default\r
+     * direction unless overridden and is consumed when its extrusion succeeds.\r
+     */\r
+    extrudeUntil(limitingFace: Face, extrusionConfig?: ExtrudeUntilOptions): Shape3D;\r
     /** Extrudes the sketch to a certain distance.(along the default direction\r
      * and origin of the sketch).\r
      *\r
@@ -2517,7 +2600,7 @@ export declare class Sketches {\r
      * Revolves the drawing on an axis (defined by its direction and an origin\r
      * (defaults to the sketch origin)\r
      */\r
-    revolve(revolutionAxis?: Point, config?: {\r
+    revolve(revolutionAxis?: Point | AxisName, config?: {\r
         origin?: Point;\r
         angle?: number;\r
     }): AnyShape;\r
@@ -2547,10 +2630,17 @@ export declare interface SketchInterface {\r
      * Revolves the drawing on an axis (defined by its direction and an origin\r
      * (defaults to the sketch origin)\r
      */\r
-    revolve(revolutionAxis?: Point, config?: {\r
+    revolve(revolutionAxis?: Point | AxisName, config?: {\r
         origin?: Point;\r
         angle?: number;\r
     }): Shape3D;\r
+    /**\r
+     * Extrudes the sketch up to a limiting face, returning only the extrusion.\r
+     * The face is not consumed. The sketch uses its default extrusion direction\r
+     * unless overridden and is consumed on success. The finite limiting face\r
+     * must fully cap the extrusion once without crossing the profile.\r
+     */\r
+    extrudeUntil(limitingFace: Face, extrusionConfig?: ExtrudeUntilOptions): Shape3D;\r
     /**\r
      * Extrudes the sketch to a certain distance.(along the default direction\r
      * and origin of the sketch).\r
@@ -2820,6 +2910,14 @@ declare type AxisName = (typeof AXIS_NAMES)[number];\r
 \r
 export declare interface BooleanOperationOptions {\r
     optimisation?: "none" | "commonFace" | "sameFace";\r
+    /**\r
+     * Merge same-domain faces and edges after the Boolean operation.\r
+     * This cleans up topology; it does not simplify a mesh. Set to \`false\` to\r
+     * skip this cleanup, which can change downstream face and edge selection.\r
+     *\r
+     * @default true\r
+     */\r
+    simplify?: boolean;\r
 }\r
 \r
 export declare type ChamferEdgeConfig = {\r
@@ -2875,7 +2973,7 @@ declare type CurveType = "LINE" | "CIRCLE" | "ELLIPSE" | "HYPERBOLA" | "PARABOLA
 export declare function curveType(curveInput: CurveInput): CurveType;\r
 \r
 /** Builds a raw shape by cutting a tool shape from another shape. */\r
-export declare function cutShape(shapeInput: ShapeInput, toolInput: ShapeInput, { optimisation }?: BooleanOperationOptions): TopoDS_Shape;\r
+export declare function cutShape(shapeInput: ShapeInput, toolInput: ShapeInput, { optimisation, simplify }?: BooleanOperationOptions): TopoDS_Shape;\r
 \r
 /**\r
  * Cuts a shape with the half-space defined by an oriented plane.\r
@@ -2962,12 +3060,12 @@ export declare type FilletRadius = number | [number, number];\r
 export declare function filletShape(shapeInput: ShapeInput, edges: Iterable<FilletEdgeConfig>): TopoDS_Shape;\r
 \r
 /** Builds a raw shape by fusing two shapes. */\r
-export declare function fuseShapes(leftInput: ShapeInput, rightInput: ShapeInput, { optimisation }?: BooleanOperationOptions): TopoDS_Shape;\r
+export declare function fuseShapes(leftInput: ShapeInput, rightInput: ShapeInput, { optimisation, simplify }?: BooleanOperationOptions): TopoDS_Shape;\r
 \r
 export declare type GenericTopo = TopologyMap[TopoEntity];\r
 \r
 /** Builds a raw shape containing the intersection of two shapes. */\r
-export declare function intersectShapes(leftInput: ShapeInput, rightInput: ShapeInput): TopoDS_Shape;\r
+export declare function intersectShapes(leftInput: ShapeInput, rightInput: ShapeInput, { simplify }?: Pick<BooleanOperationOptions, "simplify">): TopoDS_Shape;\r
 \r
 export declare function isFilletRadius(radius: unknown): radius is FilletRadius;\r
 \r
